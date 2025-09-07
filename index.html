@@ -1,0 +1,474 @@
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SHIVANG</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN for Insurance Comparison Dashboard styles -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="flex flex-wrap gap-4 justify-center p-10 bg-gradient-to-tr from-blue-100 to-purple-100">
+<button class="animated-btn bg-gradient-to-r from-blue-500 to-blue-700" onclick="openCSATModal()">CSAT Calculator</button>
+<button class="animated-btn bg-gradient-to-r from-green-500 to-green-700" onclick="openEndorsementPage()">ENDORSEMENT</button>
+<button class="animated-btn bg-gradient-to-r from-indigo-500 to-indigo-700" onclick="openManualVIPage()">MANUAL-VI &amp; Claim Coverage</button>
+<button class="animated-btn bg-gradient-to-r from-indigo-500 to-indigo-700" onclick="openClaimCountNSTPPage()">Claim_Count &amp; NSTP</button>
+<button class="animated-btn bg-gradient-to-r from-orange-500 to-orange-700" onclick="openInspectionWaiverPage()">Inspection Waiver</button>
+<button class="animated-btn bg-gradient-to-r from-orange-500 to-orange-700" onclick="openRSAPage()">RSA &amp; CONTACT</button>
+<button class="animated-btn bg-gradient-to-r from-purple-500 to-purple-700" onclick="window.open('https://ntqueprince.github.io/notebook/', '_blank')">NOTEBOOK</button>
+<button class="animated-btn bg-gradient-to-r from-pink-500 to-pink-700" onclick="openIncentiveModal()">INCENTIVE CALCULATOR</button>
+</div>
+<!-- Renamed Manual VI button -->
+<!-- New button for Claim_Count & NSTP -->
+<!-- New button for Inspection Waiver -->
+<!-- New button for RSA & Contact -->
+<!-- "📷SHIVANG" header ko "Aaj Ki Baat" button se replace kiya gaya hai -->
+<!-- REPLACED: Aaj Ki Baat button will now be the UPDATES button -->
+<!-- New Notebook button added here -->
+
+<!-- "UPDATES" button moved here, above the upload-section -->
+<div id="companyUpdatesButton">
+<span>UPDATES</span>
+<span id="latestUpdateSnippet"></span>
+<span id="newUpdateIndicator"></span>
+</div>
+<div class="shivang-glow">SHIVANG</div>
+
+<div class="upload-section">
+<h2>Upload Images</h2>
+<label for="fileUpload">Choose image files to upload:</label>
+<input accept="image/*" id="fileUpload" type="file"/>
+<input id="tagInput" placeholder="Enter tag (e.g., SHIVANG)" type="text"/>
+<button class="colorful-upload-btn" onclick="uploadImage()">Upload</button>
+<div class="progress-container">
+<div class="progress-bar">
+<div class="progress" id="progress">0%</div>
+</div>
+<div class="status" id="status">Ready</div>
+</div>
+</div>
+<h3>Uploaded Images</h3>
+<div id="gallery"></div>
+<div class="modal" id="tagModal">
+<div class="modal-content">
+<h4>Error: Tag is required!</h4>
+<input id="modalTagInput" placeholder="Enter tag (e.g., SHIVANG)" type="text"/>
+<button class="upload-btn" onclick="submitTag()">Upload</button>
+<button class="cancel-btn" onclick="closeModal()">Cancel</button>
+<div class="modal-progress-container" id="modalProgressContainer">
+<div class="modal-progress-bar">
+<div class="modal-progress" id="modalProgress">0%</div>
+</div>
+</div>
+</div>
+</div>
+<div class="csat-modal" id="csatModal">
+<div class="csat-modal-content">
+<h4>CSAT Calculator</h4>
+<div class="input-section good-section">
+<label>Good Count:</label>
+<input id="goodCount" min="0" type="number" value="0"/>
+</div>
+<div class="input-section bad-section">
+<label>Bad Count:</label>
+<input id="badCount" min="0" type="number" value="0"/>
+</div>
+<div class="input-section">
+<label>Required CSAT (%):</label>
+<select id="requiredCSAT">
+<option value="70">70%+</option>
+<option value="71">71%+</option>
+<option value="72">72%+</option>
+<option value="73">73%+</option>
+<option value="74">74%+</option>
+<option value="75">75%+</option>
+<option value="76">76%+</option>
+<option value="77">77%+</option>
+<option value="78">78%+</option>
+<option value="79">79%+</option>
+<option value="80">80%+</option>
+<option value="81">81%+</option>
+<option value="82">82%+</option>
+<option value="83">83%+</option>
+<option value="84">84%+</option>
+<option value="85">85%+</option>
+<option value="86">86%+</option>
+<option value="87">87%+</option>
+<option value="88">88%+</option>
+<option value="89">89%+</option>
+<option value="90">90%+</option>
+<option value="91">91%+</option>
+<option value="92">92%+</option>
+<option value="93">93%+</option>
+<option value="94">94%+</option>
+<option value="95">95%+</option>
+<option value="96">96%+</option>
+<option value="97">97%+</option>
+<option value="98">98%+</option>
+<option value="99">99%+</option>
+<option value="100">100%+</option>
+</select>
+</div>
+<div class="result-section" id="csatResult">
+<p>Total: 0</p>
+<p>CSAT: 0%</p>
+<p id="csatStatus">Enter counts to see status</p>
+</div>
+<!-- New button container for alignment -->
+<div class="button-container">
+<button class="close-btn" onclick="closeCSATModal()">Close</button>
+<button class="calculate-btn" id="calculateButton" onclick="calculateCSAT()">Calculate</button>
+</div>
+</div>
+</div>
+<div class="modal-overlay" id="updatesModal">
+<div class="modal-content">
+<span class="modal-close-button" id="closeModalButton">×</span>
+<h2>Company Updates</h2>
+<div id="updatesContainer">
+<!-- Updates will be populated here by JavaScript -->
+</div>
+</div>
+</div>
+<div class="endorsement-page" id="endorsementPage">
+<div class="endorsement-container">
+<h1>ENDORSEMENT</h1>
+<div class="created-by">Created by Shivang</div>
+<button class="back-btn" onclick="closeEndorsementPage()">Back to Main Page</button>
+<label for="insurer">Select Insurance Company:</label>
+<select class="PB_DROPDOWN" id="insurer">
+<option disabled="" selected="">Select Insurer</option>
+</select>
+<label for="requirement">Select Requirement:</label>
+<select class="PB_DROPDOWN" disabled="" id="requirement">
+<option disabled="" selected="">Select Requirement</option>
+</select>
+<div class="output" id="output"></div>
+</div>
+</div>
+<div class="manual-vi-page" id="manualVIPage">
+<button class="back-btn" onclick="closeManualVIPage()">Back to Main Page</button>
+<!-- New "Claim Coverage" button with green color -->
+<button class="claim-coverage-btn back-btn claim-coverage-btn-green" onclick="toggleClaimCoverage()">Claim Coverage</button>
+<div class="card mt-4" id="manualVICardContent">
+<div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+</div>
+<div class="card-body">
+<div class="mb-3 p-3 rounded" style="background-color: #e3f2fd;">
+<strong>ADP Home Visit Cities: 42</strong>
+<ul class="mb-0" style="columns: 2;">
+<li>Aligarh</li><li>Alwar</li><li>Ambala</li><li>Amritsar</li><li>Belgaum</li>
+<li>Bhiwani</li><li>Bhubaneshwar</li><li>Bilaspur</li><li>Coimbatore</li><li>Dhanbad</li>
+<li>Guwahati</li><li>Haldwani</li><li>Haridwar</li><li>Indore</li><li>Jalandhar</li>
+<li>Jamshedpur</li><li>Jhajjar</li><li>Jhansi</li><li>Jind</li><li>Jodhpur</li>
+<li>Kangra</li><li>Madurai</li><li>Mathura</li><li>Moradabad</li><li>Muzaffarnagar</li>
+<li>Mysore</li><li>Nagpur</li><li>Panipat</li><li>Pondicherry</li><li>Raipur</li>
+<li>Rajkot</li><li>Rewa</li><li>Rewari</li><li>Rohtak</li><li>Satara</li>
+<li>Shimla</li><li>Ludhiana</li><li>Surat</li><li>Thiruvananthapuram</li><li>Thrissur</li><li>Udaipur</li>
+<li>Varanasi</li><li>Yamuna Nagar</li>
+</ul>
+</div>
+<div class="mb-3 p-3 rounded" style="background-color: #d0f0c0;">
+<strong>Manual Home Visit Cities: 14</strong>
+<ul class="mb-0" style="columns: 2;">
+<li>Ahmedabad</li><li>Bangalore</li><li>Chennai</li><li>Delhi</li><li>Faridabad</li>
+<li>Ghaziabad</li><li>Gurgaon</li><li>Hyderabad</li><li>Kolkata</li><li>Mumbai</li>
+<li>Noida &amp; Greater Noida</li><li>Patna</li><li>Pune</li><li>Thane &amp; Navi Mumbai</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Claim Coverage Overlay -->
+<div class="claim-coverage-overlay" id="claimCoverageOverlay">
+<div class="claim-coverage-content">
+<h4>Claim Coverage Details</h4>
+<ul>
+<li><strong>Plastic Nylon Rubber:</strong> 50%</li>
+<li><strong>Tyre tube Batteries:</strong> 50%</li>
+<li><strong>Denting Painting:</strong> 87.5%</li>
+<li><strong>Fiberglass:</strong> 70%</li>
+<li><strong>Windshield glass:</strong> 100%</li>
+<li><strong>Metal, Wooden fiber and other parts:</strong> As per car age</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- New Claim_Count & NSTP Section (Insurance Comparison Dashboard) -->
+<div class="claim-count-nstp-page" id="claimCountNSTPPage">
+<div class="container mx-auto p-4 bg-white rounded-2xl shadow-2xl max-w-7xl w-full border-4 border-transparent bg-clip-border bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" style="margin-top: 20px;">
+<h1 class="text-4xl font-bold text-center mb-6 text-indigo-800 tracking-tight">Insurance Comparison Dashboard</h1>
+<div class="mb-4">
+<input class="search-input w-full p-3 text-lg border-2 border-blue-500 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-pink-500 bg-blue-50 text-gray-800 placeholder-gray-500" id="searchInput" placeholder="Search by Insurer Name..." type="text"/>
+</div>
+<div class="overflow-x-auto rounded-lg">
+<table class="w-full bg-white border border-gray-300" id="insuranceTable">
+<thead class="bg-gray-900 text-white text-lg font-semibold">
+<tr>
+<th class="table-header p-2 text-left" data-column="insurer_name">Insurer Name</th>
+<!-- Reordered columns: ZD Claims/Year and Non-ZD Claims/Year moved up -->
+<th class="table-header p-2 text-left" data-column="zd_claims_year">ZD Claims/Year</th>
+<th class="table-header p-2 text-left" data-column="non_zd_claims_year">Non-ZD Claims/Year</th>
+<th class="table-header p-2 text-left" data-column="commercial">Commercial</th>
+<th class="table-header p-2 text-left" data-column="video_approval">Video Approval</th>
+<th class="table-header p-2 text-left" data-column="video_tat">Video TAT</th>
+<th class="table-header p-2 text-left" data-column="short_partial">Short Partial</th>
+<th class="table-header p-2 text-left" data-column="artificial_low_lighting">Artificial Low Lighting</th>
+<th class="table-header p-2 text-left" data-column="scar_declaration">Scar Declaration</th>
+<th class="table-header p-2 text-left" data-column="brand_new_3_3">Brand New 3+3</th>
+<th class="table-header p-2 text-left" data-column="old_3_3">Old 3+3</th>
+</tr>
+</thead>
+<tbody class="text-gray-800 text-base" id="tableBody">
+<!-- Data will be populated by JavaScript -->
+</tbody>
+</table>
+</div>
+</div>
+<button class="back-btn" onclick="closeClaimCountNSTPPage()">Back to Main Page</button>
+</div>
+<!-- New Inspection Waiver Page -->
+<div class="inspection-waiver-page" id="inspectionWaiverPage">
+<div class="inspection-waiver-container">
+<h1>Inspection Waiver</h1>
+<div class="created-by">Created by Shivang</div>
+<div class="inspection-waiver-table-container">
+<table class="inspection-waiver-table">
+<thead>
+<tr>
+<th>Insurer Name</th>
+<th>Policy Waiver</th>
+</tr>
+</thead>
+<tbody id="inspectionWaiverTableBody">
+<!-- Data will be populated by JavaScript -->
+</tbody>
+</table>
+</div>
+<button class="back-btn" onclick="closeInspectionWaiverPage()">Back to Main Page</button>
+</div>
+</div>
+<!-- New RSA & Contact Page -->
+<div class="rsa-contact-page" id="rsaContactPage">
+<div class="rsa-contact-container">
+<h1>RSA &amp; CONTACT</h1>
+<div class="created-by">Created by Shivang</div>
+<div class="mb-4">
+<input class="search-input w-full p-3 text-lg border-2 border-purple-500 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-pink-500 bg-purple-50 text-gray-800 placeholder-gray-500" id="rsaSearchInput" placeholder="Search by Insurer Name..." type="text"/>
+</div>
+<div class="rsa-contact-table-container">
+<table class="rsa-contact-table">
+<thead>
+<tr>
+<th>Sr.</th>
+<th>Insurer Name</th>
+<th>RSA and Toll Free Number</th>
+<th>Claim No.</th>
+</tr>
+</thead>
+<tbody id="rsaContactTableBody">
+<!-- Data will be populated by JavaScript -->
+</tbody>
+</table>
+</div>
+<button class="back-btn" onclick="closeRSAPage()">Back to Main Page</button>
+</div>
+</div>
+<script type="module" src="script.js"></script>
+ <!-- Floating Chat Button -->
+<button id="openChatBtn" class="fixed bottom-4 right-4 w-14 h-14 rounded-full shadow-lg text-white text-2xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:scale-110 transition z-50" onclick="toggleChat()">
+  💬
+</button>
+
+<!-- Chat Canvas (Vertical full screen height) -->
+<div id="chatCanvas" class="fixed bottom-0 right-0 w-full sm:w-[450px] h-[85vh] bg-white shadow-2xl rounded-tl-2xl border-t-4 border-indigo-600 flex flex-col z-50 translate-y-full transition-transform duration-500">
+  <div class="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-tl-2xl">
+    <span class="text-base font-semibold">External Chat</span>
+    <button onclick="toggleChat()" class="text-sm ml-2">✖</button>
+  </div>
+  <div id="chatMessages" class="flex-1 p-4 overflow-y-auto flex flex-col space-y-2" onclick="event.stopPropagation()">
+    <!-- messages go here -->
+  </div>
+  <div class="p-4 border-t bg-gray-50" onclick="event.stopPropagation()">
+    <textarea id="chatMessage" placeholder="Type your message..." rows="2" class="w-full px-3 py-2 border rounded-md"></textarea>
+    <button onclick="sendMessage()" class="mt-2 w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">Send</button>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://zilzzcockvphmhexjggk.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppbHp6Y29ja3ZwaG1oZXhqZ2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5NzEwNzgsImV4cCI6MjA2OTU0NzA3OH0.LKHOyHzxdHJGc9fvDbJAwVOmE7F0XwIqCt36tYcPKlk";
+
+const headers = {
+  apikey: SUPABASE_ANON_KEY,
+  Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+  "Content-Type": "application/json"
+};
+
+const chatCanvas = document.getElementById('chatCanvas');
+const chatMessages = document.getElementById('chatMessages');
+
+function toggleChat(show = null) {
+  const visible = !chatCanvas.classList.contains('translate-y-full');
+  const shouldShow = show !== null ? show : !visible;
+  chatCanvas.classList.toggle('translate-y-full', !shouldShow);
+  if (shouldShow) loadMessages();
+}
+
+window.addEventListener('click', function (e) {
+  if (!chatCanvas.contains(e.target) && !document.getElementById('openChatBtn').contains(e.target)) {
+    toggleChat(false);
+  }
+});
+
+async function loadMessages() {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/comments?select=*&order=created_at.asc`, { headers });
+  const data = await res.json();
+  chatMessages.innerHTML = '';
+  data.forEach((msg, i) => {
+    const color = i % 2 === 0 ? 'bg-orange-100' : 'bg-blue-100';
+    const div = document.createElement('div');
+    div.className = `group relative p-3 rounded-md ${color} shadow-sm text-sm`;
+    div.innerHTML = `
+      <div class="flex justify-between">
+        <div>${msg.message}</div>
+        <button onclick="deleteMessage('${msg.id}')" class="absolute top-1 right-1 opacity-0 group-hover:opacity-100 text-xs text-red-500 hover:text-red-700">❌</button>
+      </div>
+    `;
+    chatMessages.appendChild(div);
+  });
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+async function sendMessage() {
+  const messageBox = document.getElementById('chatMessage');
+  const message = messageBox.value.trim();
+  if (!message) return alert("Please type something.");
+
+  // Show immediately in UI
+  const div = document.createElement('div');
+  div.className = `p-3 rounded-md bg-orange-100 shadow-sm text-sm flex justify-between items-start`;
+  div.innerHTML = `
+    <div>${message}</div>
+    <button class="text-red-400 hover:text-red-600 text-xs ml-2 opacity-0">❌</button>
+  `;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Clear input immediately
+  messageBox.value = '';
+
+  // Send to Supabase in background
+  await fetch(`${SUPABASE_URL}/rest/v1/comments`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ username: null, message })
+  });
+
+  // After that, load fresh list
+  loadMessages();
+}
+
+async function deleteMessage(id) {
+  const confirmed = confirm("Delete this message?");
+  if (!confirmed) return;
+  await fetch(`${SUPABASE_URL}/rest/v1/comments?id=eq.${id}`, {
+    method: "DELETE",
+    headers
+  });
+  loadMessages();
+}
+
+// Enter to send, Shift+Enter for newline
+const chatInput = document.getElementById('chatMessage');
+chatInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+</script>
+<!-- Incentive Calculator Modal -->
+<div class="incentive-modal" id="incentiveModal">
+  <div class="incentive-modal-content">
+    <h2 class="title">🎯 Incentive Calculator</h2>
+
+    <!-- CSAT -->
+    <div class="input-section">
+      <label for="incentiveCSAT">CSAT %:</label>
+      <select id="incentiveCSAT">
+        <!-- 70 से 99% तक -->
+        <script>
+          for (let i = 70; i <= 99; i++) {
+            document.write(`<option value="${i}">${i}%</option>`);
+          }
+        </script>
+      </select>
+    </div>
+
+    <!-- Quality -->
+    <div class="input-section">
+      <label for="incentiveQuality">Quality %:</label>
+      <select id="incentiveQuality">
+        <script>
+          for (let i = 40; i <= 100; i += 5) {
+            document.write(`<option value="${i}">${i}%</option>`);
+          }
+        </script>
+      </select>
+    </div>
+
+    <!-- AHT -->
+    <div class="input-section">
+      <label for="incentiveAHTMin">AHT (Minutes:Seconds):</label>
+      <select id="incentiveAHTMin"></select> :
+      <select id="incentiveAHTSec"></select>
+    </div>
+
+    <!-- Deductions -->
+    <div class="input-section">
+      <label for="escalation">Escalation:</label>
+      <select id="escalation">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2+</option>
+      </select>
+    </div>
+
+    <div class="input-section">
+      <label for="ul">Unscheduled Leave (UL):</label>
+      <select id="ul">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+
+    <div class="input-section">
+      <label for="warning">Warning Letter:</label>
+      <select id="warning">
+        <option value="0">0</option>
+        <option value="1">1+</option>
+      </select>
+    </div>
+
+    <!-- Result -->
+    <div class="result-section" id="incentiveResult">
+      <p>🔍 Select values and click Calculate</p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="button-container">
+      <button class="close-btn" onclick="closeIncentiveModal()">Close</button>
+      <button class="calculate-btn" onclick="calculateIncentive()">Calculate</button>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
+<script async="async" data-cfasync="false" src="//pl27511638.profitableratecpm.com/56a70ac979ef8c7a97938c1af5d3e83d/invoke.js"></script>
+<div id="container-56a70ac979ef8c7a97938c1af5d3e83d"></div>

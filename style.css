@@ -1,0 +1,1524 @@
+/* * IMPORTANT: All existing styles from the user's provided structure.html are preserved.
+     * ONLY new styles required for the "UPDATES" button and modal are added below this line.
+     */
+    body {
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      text-align: center;
+      margin: 0;
+      min-height: 100vh;
+    }
+    h2, h3 {
+      color: #1a237e;
+      font-weight: 600;
+    }
+    h2 {
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+    h3 {
+      font-size: 1.5em;
+    }
+    .upload-section {
+      margin-top: 30px; /* Adjusted margin-top to push it further down */
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    input[type="file"], input[type="text"], button {
+      padding: 12px;
+      margin: 8px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #b0bec5;
+      width: 80%;
+      max-width: 300px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    input[type="text"]:focus, input[type="file"]:focus {
+      border-color: #3f51b5;
+      box-shadow: 0 0 8px rgba(63, 81, 181, 0.3);
+      outline: none;
+    }
+    button {
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #303f9f;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+    .progress-container {
+      width: 80%;
+      max-width: 300px;
+      margin: 10px auto;
+    }
+    .progress-bar {
+      width: 100%;
+      background-color: #eceff1;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .progress {
+      width: 0%;
+      height: 20px;
+      background: linear-gradient(90deg, #3f51b5, #5c6bc0);
+      text-align: center;
+      line-height: 20px;
+      color: white;
+      font-weight: 400;
+      transition: width 0.3s ease;
+    }
+    .status {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #455a64;
+      font-weight: 400;
+    }
+    #gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      justify-items: center;
+      padding: 10px;
+    }
+    .image-container {
+      background: white;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: all 0.3s ease;
+      max-width: 200px;
+    }
+    .image-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+    #gallery img {
+      max-width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+    }
+    .tag {
+      margin: 5px 0;
+      font-size: 16px;
+      font-weight: 500;
+      color: #37474f;
+    }
+    /* Styles for Download Button (updated to match previous download-btn styles) */
+    .download-btn {
+      background-color: #ff5722;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 5px;
+      font-size: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+      white-space: nowrap;
+      z-index: 2;
+      position: relative;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    /* ✅ Extra support for small screen (mobile) */
+    @media (max-width: 600px) {
+      .download-btn {
+        font-size: 16px;
+        padding: 10px 20px;
+        min-width: 110px;
+        text-align: center;
+      }
+    }
+    .download-btn:hover {
+      background-color: #e64a19;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+    /* Popup Styles for Tag Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      border: 2px solid #3f51b5;
+    }
+    .modal-content h4 {
+      margin: 0 0 15px;
+      color: #d32f2f;
+      font-weight: 500;
+    }
+    .modal-content input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #b0bec5;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .modal-content input[type="text"]:focus {
+      border-color: #3f51b5;
+      box-shadow: 0 0 8px rgba(63, 81, 181, 0.3);
+      outline: none;
+    }
+    .modal-content button {
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .modal-content .upload-btn {
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .modal-content .upload-btn:hover {
+      background-color: #303f9f;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .modal-content .cancel-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .modal-content .cancel-btn:hover {
+      background-color: #d32f2f;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .modal-progress-container {
+      width: 100%;
+      margin: 10px 0;
+      display: none;
+    }
+    .modal-progress-bar {
+      width: 100%;
+      background-color: #eceff1;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .modal-progress {
+      width: 0%;
+      height: 20px;
+      background: linear-gradient(90deg, #3f51b5, #5c6bc0);
+      text-align: center;
+      line-height: 20px;
+      color: white;
+      font-weight: 400;
+      transition: width 0.3s ease;
+    }
+    /* CSAT Calculator Modal Styles */
+    .csat-modal {
+      display: none;
+      position: fixed;
+      z-index: 2;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .csat-modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      border: 2px solid #3f51b5;
+    }
+    .csat-modal-content h4 {
+      color: #1a237e;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    .csat-modal-content .input-section {
+      margin-bottom: 15px;
+    }
+    .csat-modal-content label {
+      display: block;
+      font-size: 1em;
+      color: #37474f;
+      margin-bottom: 5px;
+    }
+    .csat-modal-content input, .csat-modal-content select {
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 8px;
+      border: 1px solid #b0bec5;
+      width: 100%;
+      max-width: 200px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    .csat-modal-content input:focus, .csat-modal-content select:focus {
+      border-color: #3f51b5;
+      box-shadow: 0 0 8px rgba(63, 81, 181, 0.3);
+      outline: none;
+    }
+    .csat-modal-content .good-section {
+      background: #c8e6c9;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .csat-modal-content .bad-section {
+      background: #ffcdd2;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .csat-modal-content .result-section {
+      margin-top: 15px;
+      padding: 10px;
+      background: #eceff1;
+      border-radius: 8px;
+    }
+    .csat-modal-content .result-section p {
+      margin: 5px 0;
+      font-size: 0.9em;
+      color: #455a64;
+    }
+    .csat-modal-content .success {
+      color: #2e7d32;
+      font-weight: 500;
+      padding: 5px;
+      border-radius: 4px;
+      background: rgba(200, 230, 201, 0.3);
+    }
+    .csat-modal-content .error {
+      color: #c62828;
+      font-weight: 600;
+      font-size: 1em;
+      padding: 5px;
+      border-radius: 4px;
+      background: rgba(255, 205, 210, 0.3);
+      display: inline-block;
+    }
+    /* Button container for "Close" and "Calculate" */
+    .csat-modal-content .button-container {
+      display: flex;
+      justify-content: center; /* Center buttons horizontally */
+      gap: 15px; /* Space between buttons */
+      margin-top: 20px; /* Space from content above */
+      flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    }
+    .csat-modal-content .button-container button {
+      flex: 1; /* Allow buttons to grow and shrink */
+      max-width: 150px; /* Limit individual button width */
+      margin: 0; /* Remove individual button margins handled by gap */
+    }
+
+    .csat-modal-content .close-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    .csat-modal-content .close-btn:hover {
+      background-color: #d32f2f;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    .csat-modal-content .calculate-btn {
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      /* margin-left: 10px; Removed, as gap handles spacing */
+    }
+    .csat-modal-content .calculate-btn:hover {
+      background-color: #303f9f;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    /* Fixed Buttons */
+    .csat-btn, .endorsement-btn, .manual-vi-btn-fixed, .claim-count-nstp-btn-fixed, .inspection-waiver-btn-fixed, .rsa-contact-btn-fixed {
+      position: fixed;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      font-size: 0.9em;
+      /* Default visibility for larger screens */
+      display: block;
+    }
+
+    .csat-btn {
+      top: 10px;
+      left: 10px;
+      background-color: #1b5e20; /* Keep CSAT button green */
+    }
+    .csat-btn:hover {
+      background-color: #2e7d32;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .endorsement-btn {
+      top: 10px;
+      right: 10px;
+      background-color: #1b5e20; /* Keep ENDORSEMENT button green */
+    }
+    .endorsement-btn:hover {
+      background-color: #2e7d32;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .manual-vi-btn-fixed {
+        top: 60px; /* Positioned just below endorsement button */
+        right: 10px; /* Aligned with endorsement button */
+        background-color: #3f51b5; /* Blue as per original manual button */
+    }
+
+    .manual-vi-btn-fixed:hover {
+      background-color: #303f9f;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .claim-count-nstp-btn-fixed {
+        top: 60px; /* Positioned just below CSAT button */
+        left: 10px; /* Aligned with CSAT button */
+        background-color: #3f51b5; /* Blue color, matching Manual VI */
+    }
+    .claim-count-nstp-btn-fixed:hover {
+        background-color: #303f9f;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    /* New Inspection Waiver Button */
+    .inspection-waiver-btn-fixed {
+        top: 110px; /* Positioned below Claim Count & NSTP button */
+        left: 10px; /* Aligned with CSAT and Claim Count buttons */
+        background-color: #ff9800; /* Light Orange */
+    }
+    .inspection-waiver-btn-fixed:hover {
+        background-color: #fb8c00; /* Darker orange on hover */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+    /* New RSA & Contact Button */
+    .rsa-contact-btn-fixed {
+        top: 110px; /* Positioned below Manual VI & Claim Coverage button */
+        right: 10px; /* Aligned with Manual VI & Claim Coverage button */
+        background-color: #ff9800; /* Light Orange, same as Inspection Waiver */
+    }
+    .rsa-contact-btn-fixed:hover {
+        background-color: #fb8c00; /* Darker orange on hover */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+    /* ENDORSEMENT Full-Page Widget Styles */
+    .endorsement-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      z-index: 1000;
+      padding: 0; /* Removed padding to make it truly full-page */
+      margin: 0; /* Ensure no margins */
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      overflow-y: auto; /* Make content scrollable */
+    }
+    .endorsement-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform: scale(0.9);
+      opacity: 0;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%); /* Center vertically */
+    }
+    .endorsement-container.active {
+      transform: scale(1) translateY(-50%); /* Adjust transform to include centering */
+      opacity: 1;
+    }
+    .endorsement-container h1 {
+      text-align: center;
+      color: #1a237e;
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .created-by {
+      text-align: center;
+      font-size: 0.8em;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #3f51b5, #e91e63);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .endorsement-container label {
+      display: block;
+      color: #263238;
+      font-size: 1em;
+      font-weight: 500;
+      margin: 10px 0 6px;
+    }
+    .PB_DROPDOWN {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #b0bec5;
+      border-radius: 8px;
+      font-size: 0.95em;
+      font-family: Arial, Helvetica, sans-serif; /* Changed to fix BAJAJ rendering */
+      background: #fafafa;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      height: 40px; /* Fixed height to prevent extra space */
+      appearance: none; /* Remove default browser styling */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Custom dropdown arrow */
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    .PB_DROPDOWN:focus {
+      outline: none;
+      border-color: #3f51b5;
+      box-shadow: 0 0 8px rgba(63, 81, 181, 0.3);
+    }
+    .PB_DROPDOWN:hover {
+      border-color: #3f51b5;
+    }
+    .output {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      font-size: 1em;
+      font-weight: 500;
+      line-height: 1.6;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 1px solid #bbdefb;
+      transform: scale(0.95);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .output.show {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .output.output-red {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+    }
+    .output div {
+      margin-bottom: 8px;
+    }
+    .label {
+      color: #1565c0;
+      font-weight: 700;
+      margin-right: 8px;
+    }
+    .output-red .label {
+      color: #721c24;
+    }
+    .value {
+      color: #263238;
+    }
+    .back-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .back-btn:hover {
+      background-color: #d32f2f;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+    /* Styles for Manual VI Page */
+    .manual-vi-page {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      z-index: 1000;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+      overflow-y: auto; /* Make content scrollable */
+    }
+    .manual-vi-page .back-to-home-btn {
+      /* This button is removed as per user request, keeping styles here for reference if needed */
+      display: none;
+    }
+    .manual-vi-page .card {
+        margin-top: 100px; /* Increased margin to prevent overlap with the button */
+    }
+    .manual-vi-page .card-header {
+      background-color: #343a40 !important; /* Dark background for header */
+      color: white !important; /* White text for header */
+      padding: 10px 15px;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      font-weight: 600;
+    }
+    .manual-vi-page .card-body {
+      padding: 20px;
+    }
+    .manual-vi-page ul {
+      list-style-type: disc; /* Ensure bullet points are visible */
+      padding-left: 20px;
+      text-align: left; /* Align text to the left within the lists */
+      padding-top: 20px; /* Add padding to the top of the list */
+    }
+    /* Styles for Claim Coverage Overlay */
+    .claim-coverage-overlay {
+      display: none; /* Hidden by default */
+      position: absolute; /* Position relative to .manual-vi-page */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+      z-index: 1001; /* Above other content in manual-vi-page */
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: left; /* Align text to the left within the overlay */
+      overflow-y: auto;
+    }
+
+    .claim-coverage-content {
+      background-color: #f0f8ff; /* Light blue background for content */
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      max-width: 500px; /* Max width for readability */
+      width: 100%;
+      border: 2px solid #5c6bc0; /* Blue border */
+    }
+
+    .claim-coverage-content h4 {
+      color: #1a237e;
+      font-size: 1.8em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .claim-coverage-content ul {
+      list-style-type: disc;
+      padding-left: 25px;
+      color: #37474f;
+      line-height: 1.8;
+      font-size: 1.1em;
+    }
+
+    .claim-coverage-content ul li strong {
+      color: #3f51b5; /* Blue for strong text */
+    }
+
+    /* Green color for Claim Coverage button */
+    .claim-coverage-btn-green {
+        background-color: #4CAF50; /* Green */
+    }
+    .claim-coverage-btn-green:hover {
+        background-color: #45a049; /* Darker green on hover */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
+
+    /* Styles for Claim_Count & NSTP Page (Insurance Comparison Dashboard) */
+    .claim-count-nstp-page {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      z-index: 1000;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto; /* Make content scrollable */
+      font-family: 'Poppins', sans-serif; /* Use Poppins font for consistency */
+    }
+    /* Styles from index (4).html adjusted for integration */
+    .claim-count-nstp-page .table-header {
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+        /* Changed to dark grey background with white text for better visibility */
+        background-color: #2d3748; /* Dark grey */
+        color: white; /* White text */
+    }
+    .claim-count-nstp-page .table-header:hover {
+        background-color: #4a5568; /* Slightly lighter grey on hover */
+        transform: scale(1.03); /* Reduced scale for subtler effect */
+    }
+    .claim-count-nstp-page .sort-icon::after {
+        content: '↕';
+        margin-left: 5px;
+        display: inline-block;
+        color: white; /* Ensure icon is white */
+    }
+    .claim-count-nstp-page .sort-asc::after {
+        content: '↑';
+        color: white; /* Ensure icon is white */
+    }
+    .claim-count-nstp-page .sort-desc::after {
+        content: '↓';
+        color: white; /* Ensure icon is white */
+    }
+    .claim-count-nstp-page .table-row {
+        transition: background-color 0.3s;
+    }
+    .claim-count-nstp-page .table-row:hover {
+        background-color: #fefcbf;
+    }
+    .claim-count-nstp-page .search-input {
+        transition: all 0.3s;
+    }
+    .claim-count-nstp-page .search-input:focus {
+        border-color: #db2777;
+        box-shadow: 0 0 10px rgba(219, 39, 119, 0.5);
+    }
+    .claim-count-nstp-page td, .claim-count-nstp-page th {
+        white-space: normal !important;
+        word-break: break-words !important;
+    }
+    .claim-count-nstp-page .table-row:nth-child(odd) {
+        background-color: #e0f7fa; /* Light blue for odd rows */
+    }
+    .claim-count-nstp-page .table-row:nth-child(even) {
+        background-color: #fce4ec; /* Light pink for even rows */
+    }
+    .claim-count-nstp-page .table-row:hover {
+        background-color: #fff9c4 !important; /* Bright yellow on hover */
+    }
+    
+    /* Styles for Inspection Waiver Page */
+    .inspection-waiver-page {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      z-index: 1000;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+    }
+    .inspection-waiver-container {
+      max-width: 700px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 3px solid #ff9800; /* Orange border */
+      position: relative;
+      animation: slideInFromTop 0.5s ease-out;
+    }
+    @keyframes slideInFromTop {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    .inspection-waiver-container h1 {
+      color: #e65100; /* Darker orange for title */
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .inspection-waiver-container .created-by {
+      font-size: 0.7em;
+      color: #616161;
+      margin-bottom: 20px;
+      background: none; /* Remove gradient from global .created-by */
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      color: #616161; /* Specific color for this section */
+      text-align: center;
+      animation: none; /* Remove animation from global .created-by */
+    }
+    .inspection-waiver-table-container {
+      margin-top: 20px;
+      overflow-x: auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .inspection-waiver-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background-color: #fff;
+      border-radius: 15px;
+      overflow: hidden; /* Ensures rounded corners apply to content */
+    }
+    .inspection-waiver-table th, .inspection-waiver-table td {
+      padding: 15px;
+      border-bottom: 1px solid #f0f0f0;
+      text-align: left;
+      font-size: 1em;
+    }
+    .inspection-waiver-table th {
+      background-color: #ffcc80; /* Lighter orange for header */
+      color: #8d4000; /* Dark orange text */
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .inspection-waiver-table tbody tr:nth-child(odd) {
+      background-color: #fff3e0; /* Very light orange for odd rows */
+    }
+    .inspection-waiver-table tbody tr:nth-child(even) {
+      background-color: #ffe0b2; /* Slightly darker light orange for even rows */
+    }
+    .inspection-waiver-table tbody tr:hover {
+      background-color: #ffd54f; /* Yellowish orange on hover */
+      transition: background-color 0.2s ease;
+    }
+    .inspection-waiver-table td:first-child {
+      font-weight: 500;
+      color: #e65100; /* Insurer Name in dark orange */
+    }
+    .policy-waiver-column {
+        color: #37474f; /* Default text color */
+    }
+    .policy-waiver-column.no-waiver {
+        color: #d32f2f; /* Red for "No Waiver" */
+        font-weight: 600;
+    }
+    .policy-waiver-column.days-waiver {
+        color: #1b5e20; /* Green for waiver with days */
+        font-weight: 600;
+    }
+
+    /* Styles for RSA & Contact Page */
+    .rsa-contact-page {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      z-index: 1000;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+    }
+    .rsa-contact-container {
+      max-width: 900px; /* Wider for more content */
+      margin: 20px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 3px solid #ff9800; /* Orange border, same as inspection waiver */
+      position: relative;
+      animation: slideInFromTop 0.5s ease-out;
+    }
+    .rsa-contact-container h1 {
+      color: #e65100; /* Darker orange for title, same as inspection waiver */
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    .rsa-contact-container .created-by {
+      font-size: 0.7em;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #ff9800, #ff5722); /* Orange gradient for text */
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent; /* Makes the gradient visible */
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    .rsa-contact-table-container {
+      margin-top: 20px;
+      overflow-x: auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .rsa-contact-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background-color: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    .rsa-contact-table th, .rsa-contact-table td {
+      padding: 12px 15px; /* Slightly less padding for more content */
+      border-bottom: 1px solid #f0f0f0;
+      text-align: left;
+      font-size: 0.95em;
+    }
+    .rsa-contact-table th {
+      background-color: #ffcc80; /* Lighter orange for header */
+      color: #8d4000; /* Dark orange text */
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .rsa-contact-table tbody tr:nth-child(odd) {
+      background-color: #fff3e0; /* Very light orange for odd rows */
+    }
+    .rsa-contact-table tbody tr:nth-child(even) {
+      background-color: #ffe0b2; /* Slightly darker light orange for even rows */
+    }
+    .rsa-contact-table tbody tr:hover {
+      background-color: #ffd54f; /* Yellowish orange on hover */
+      transition: background-color 0.2s ease;
+    }
+    .rsa-contact-table td:first-child {
+      font-weight: 500;
+      color: #e65100; /* Insurer Name in dark orange */
+    }
+    .rsa-contact-table td {
+        white-space: normal; /* Allow text to wrap */
+        word-break: break-word;
+    }
+
+
+    @media (max-width: 600px) {
+      /* Hide all fixed buttons on main page view for mobile */
+      .csat-btn,
+      .endorsement-btn,
+      .manual-vi-btn-fixed,
+      .claim-count-nstp-btn-fixed,
+      .inspection-waiver-btn-fixed,
+      .rsa-contact-btn-fixed { /* New button added here */
+        display: none;
+      }
+
+      #gallery {
+        grid-template-columns: 1fr;
+      }
+      .image-container {
+        padding: 8px;
+        max-width: 100%;
+      }
+      h2, h3 {
+        font-size: 1.2em;
+      }
+      .modal-content, .csat-modal-content {
+        width: 80%;
+        padding: 15px;
+      }
+      .csat-modal-content .error {
+        font-size: 0.85em;
+        padding: 4px;
+      }
+      .csat-modal-content .success {
+        font-size: 0.85em;
+        padding: 4px;
+      }
+      .csat-modal-content .result-section p {
+        font-size: 0.8em;
+      }
+      .endorsement-container {
+        width: 90vw;
+        padding: 15px;
+      }
+      .endorsement-container h1 {
+        font-size: 1.5em;
+      }
+      .PB_DROPDOWN {
+        font-size: 0.9em;
+        height: 36px; /* Adjusted for mobile */
+      }
+      .output {
+        font-size: 0.95em;
+      }
+      .created-by {
+        font-size: 0.7em;
+      }
+      /* Ensure the mobile page content has enough margin to clear any top elements */
+      .manual-vi-page .card, .claim-count-nstp-page .container, .inspection-waiver-page .inspection-waiver-container, .rsa-contact-page .rsa-contact-container {
+        margin-top: 60px; /* Adjusted for mobile to account for back buttons */
+      }
+      .claim-count-nstp-page h1, .inspection-waiver-page h1, .rsa-contact-page h1 {
+        font-size: 1.8em; /* Adjust font size for mobile view */
+      }
+      /* Ensure back buttons within active full-page sections are visible on mobile */
+      .endorsement-page .back-btn,
+      .manual-vi-page .back-btn, /* This is the "Back to Main Page" button */
+      .manual-vi-page .claim-coverage-btn, /* New button for Claim Coverage */
+      .claim-count-nstp-page .back-btn,
+      .inspection-waiver-page .back-btn,
+      .rsa-contact-page .back-btn { /* New button for RSA Contact */
+        display: block; /* Make sure these buttons are visible within their pages on mobile */
+        position: absolute; /* Changed to absolute to be relative to the page div */
+        top: 20px;
+        left: 20px;
+        z-index: 1001; /* Ensure it's above other content */
+      }
+      /* Adjust position for the new Claim Coverage button on mobile */
+      .manual-vi-page .claim-coverage-btn {
+        top: 60px; /* Position below Back to Main Page button */
+      }
+      /* Adjust position for the new Inspection Waiver button on mobile */
+      /* No specific adjustment needed here, general .back-btn styles should apply */
+
+      /* On mobile, when the claim coverage overlay is active, the regular card should be hidden */
+      .manual-vi-page.claim-coverage-active .card {
+          display: none;
+      }
+    }
+
+    /* --- NEW STYLES FOR UPDATES BUTTON AND MODAL --- */
+    /* These styles are added to blend with the existing design */
+    #companyUpdatesButton {
+        background-color: #28a745; /* Matching the 'Aaj Ki Baat' green */
+        color: white;
+        padding: 10px 25px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.5em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        text-decoration: none;
+        display: flex; /* Changed from inline-block to flex */
+        flex-direction: column; /* Stack text and snippet */
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        position: relative; /* For the new update indicator */
+        width: 80%; /* Match existing input/button width */
+        max-width: 300px; /* Match existing input/button max-width */
+        margin-left: auto; /* Center the button */
+        margin-right: auto; /* Center the button */
+        overflow: hidden; /* Hide anything overflowing, especially for snippet */
+    }
+
+    #companyUpdatesButton:hover {
+        background-color: #218838; /* Darker green on hover */
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    #latestUpdateSnippet {
+        font-size: 0.6em; /* Smaller font for snippet */
+        color: rgba(255, 255, 255, 0.8); /* Slightly faded white for readability */
+        margin-top: 5px;
+        text-align: center;
+        max-width: 90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: block;
+    }
+
+    #newUpdateIndicator {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 12px;
+        height: 12px;
+        background-color: #ffc107; /* Yellow for "New" highlight */
+        border-radius: 50%;
+        display: none; /* Hidden by default */
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+        70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+        100% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+    }
+
+    /* Modal Overlay (for updates section) */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent dark overlay */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: white;
+        padding: 25px;
+        border-radius: 15px; /* Matching other modals */
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 600px; /* Adjusted max-width for better readability of updates */
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        border: 2px solid #3f51b5; /* Matching other modals' border color */
+        animation: fadeInScale 0.3s ease-out;
+    }
+
+    @keyframes fadeInScale {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-content h2 {
+        color: #1a237e; /* Matching existing h2 color */
+        font-weight: 600;
+        font-size: 1.8em; /* Adjusted for modal h2 */
+        margin-top: 0;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+        text-align: center; /* Center align title */
+    }
+
+    .modal-close-button {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.8em;
+        cursor: pointer;
+        color: #888;
+        transition: color 0.2s;
+    }
+
+    .modal-close-button:hover {
+        color: #333;
+    }
+
+    /* Accordion Styles for Updates */
+    .accordion-item {
+        border: 1px solid #b0bec5; /* Matching input/button border */
+        border-radius: 8px; /* Matching input/button border-radius */
+        margin-bottom: 10px;
+        overflow: hidden;
+    }
+
+    .accordion-header {
+        background-color: #eceff1; /* Light grey, blending with progress bar / modal inputs */
+        color: #37474f; /* Matching tag/label color */
+        padding: 12px 15px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500; /* Matching existing font-weights */
+        font-size: 1.1em;
+        transition: background-color 0.2s;
+    }
+
+    .accordion-header:hover {
+        background-color: #cfd8dc; /* Slightly darker grey on hover */
+    }
+
+    .accordion-header::after {
+        content: '+';
+        font-size: 1.2em;
+        transition: transform 0.3s ease;
+    }
+
+    .accordion-header.active::after {
+        content: '-';
+        transform: rotate(0deg);
+    }
+
+    .accordion-content {
+        padding: 0 15px;
+        background-color: #f9f9f9; /* Lighter background for content area */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    }
+
+    .accordion-content.active {
+        max-height: 500px; /* Sufficient height for updates */
+        padding: 15px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .accordion-content ul {
+        list-style: none; /* No bullets */
+        padding: 0;
+        margin: 0;
+        text-align: left;
+    }
+
+    .accordion-content ul li {
+        margin-bottom: 8px;
+        line-height: 1.4;
+        color: #455a64; /* Matching status text color */
+        font-size: 0.95em;
+    }
+
+    .accordion-content ul li strong {
+        color: #3f51b5; /* Matching button/border blue */
+        margin-right: 5px;
+    }
+
+    /* Mobile adjustments for the new button and modal */
+    @media (max-width: 600px) {
+        #companyUpdatesButton {
+            font-size: 1.2em;
+            padding: 8px 15px;
+            width: 90%; /* Adjust width for mobile */
+            max-width: none; /* Remove max-width on mobile */
+        }
+        #latestUpdateSnippet {
+            font-size: 0.55em;
+        }
+        .modal-content {
+            padding: 15px;
+            max-width: 95%; /* Make modal wider on very small screens */
+        }
+        .modal-content h2 {
+            font-size: 1.4em;
+        }
+        .accordion-header {
+            font-size: 1em;
+            padding: 10px;
+        }
+        .accordion-content ul li {
+            font-size: 0.9em;
+        }
+    }
+
+    /* New styles for the Notebook button */
+    #notebookButton {
+        background-color: #673ab7; /* Purple color */
+        color: white;
+        padding: 10px 25px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.5em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px; /* Adjust margin to be below UPDATES button */
+        font-weight: 600;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        width: 80%;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #notebookButton:hover {
+        background-color: #512da8; /* Darker purple on hover */
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 600px) {
+        #notebookButton {
+            font-size: 1.2em;
+            padding: 8px 15px;
+            width: 90%;
+            max-width: none;
+        }
+    }
+  
+.animated-btn {
+  position: relative;
+  overflow: hidden;
+  padding: 12px 24px;
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.animated-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+.animated-btn::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 200%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.6s ease;
+  z-index: -1;
+}
+.animated-btn:hover::after {
+  left: 100%;
+}.colorful-upload-btn {
+  background: linear-gradient(90deg, #ff6ec4, #7873f5);
+  color: white;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.colorful-upload-btn:hover {
+  background: linear-gradient(90deg, #7873f5, #ff6ec4);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+.shivang-glow {
+  font-size: 40px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(270deg, #ff0080, #7928ca, #2af598, #00ffff, #ffcb52, #ff0080);
+  background-size: 1200% 1200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbowText 8s ease infinite;
+  margin-top: 10px;
+  font-family: 'Poppins', sans-serif;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes rainbowText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* Chat message box ko fix width aur wrapping dena */
+#chatMessages .group {
+  max-width: 90%;
+  word-wrap: break-word;
+  white-space: normal;
+  position: relative;
+  padding-right: 24px; /* ❌ button ke liye jagah */
+}
+
+/* ❌ Delete button ke position aur size fix karna */
+#chatMessages .group button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  height: 16px;
+  width: 16px;
+  font-size: 10px;
+  padding: 0;
+  line-height: 1;
+  border-radius: 3px;
+  color: #3b82f6; /* blue */
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+#chatMessages .group button:hover {
+  background-color: #dbeafe; /* light blue */
+  color: #2563eb;
+}
+/* Chat message ka box layout theek karne ke liye */
+#chatMessages .group {
+  max-width: 90%;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  position: relative;
+  padding: 10px 24px 10px 10px; /* right me jagah ❌ button ke liye */
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Delete button ka layout fix */
+#chatMessages .group button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  height: 16px;
+  width: 16px;
+  font-size: 10px;
+  padding: 0;
+  line-height: 1;
+  border-radius: 3px;
+  color: #3b82f6; /* blue */
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+#chatMessages .group button:hover {
+  background-color: #dbeafe; /* light blue */
+  color: #2563eb;
+}
+.incentive-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.incentive-modal-content {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  padding: 20px;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 420px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  from {transform: scale(0.8);}
+  to {transform: scale(1);}
+}
+
+.incentive-modal-content h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.input-section {
+  margin: 10px 0;
+}
+
+.input-section label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.input-section select {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+  color: #333;
+}
+
+.result-section {
+  margin-top: 15px;
+  background: #fff;
+  color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.calculate-btn {
+  background: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.close-btn {
+  background: #f44336;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
